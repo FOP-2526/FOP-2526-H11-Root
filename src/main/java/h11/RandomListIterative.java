@@ -1,0 +1,61 @@
+package h11;
+
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
+
+import java.util.function.BiFunction;
+
+/**
+ * An iterative implementation of a self-organizing list that moves accessed elements to a random position in the list
+ * based on a random index which is smaller than the position of the accessed element.
+ *
+ * @param <T> the type of elements in the list
+ */
+public class RandomListIterative<T> extends RandomList<T> implements SelfOrganizingList<T> {
+
+    /**
+     * Creates a new empty list with the given randomizer function.
+     *
+     * @param randomizer the randomizer function used to generate random indices
+     */
+    @DoNotTouch
+    public RandomListIterative(BiFunction<Integer, Integer, Integer> randomizer) {
+        super(randomizer);
+    }
+
+    /**
+     * Creates a new empty list with a default randomizer function.
+     */
+    @DoNotTouch
+    public RandomListIterative() {
+    }
+
+    @Override
+    public T get(int index) throws IndexOutOfBoundsException {
+        checkBounds(index);
+
+        if (index == 0) {
+            return head.key;
+        }
+
+        int randomIndex = getRandomIndex(index);
+        ListItem<T> randomPrev = null;
+        ListItem<T> getPrev = null;
+        ListItem<T> cursor = head;
+        for (int i = 0; i < index; i++) {
+            if (i == randomIndex - 1) {
+                randomPrev = cursor;
+            } else if (i == index - 1) {
+                getPrev = cursor;
+            }
+            cursor = cursor.next;
+        }
+
+        // Get the item at the target position
+        ListItem<T> item = getPrev.next;
+
+        // Swap the elements between randomPrev and getPrev
+        swap(randomPrev, getPrev);
+
+        return item.key;
+    }
+}
