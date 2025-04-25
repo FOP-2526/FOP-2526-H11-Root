@@ -54,49 +54,48 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
      */
     @SolutionOnly
     protected void swap(ListItem<T> minPrev, ListItem<T> maxPrev) {
+        ListItem<T> min;
+        ListItem<T> max;
         if (maxPrev == head) {
             // Case: Swap head and head.next (Transpose)
-            ListItem<T> min = head;
-            ListItem<T> max = head.next;
+            min = head;
+            max = head.next;
             final ListItem<T> maxNext = max.next;
             min.next = maxNext;
             max.next = min;
             head = max;
         } else if (minPrev == null) {
             // Case: Swap head and any other element
-            ListItem<T> min = head;
+            min = head;
+            max = maxPrev.next;
             ListItem<T> minNext = head.next;
-            ListItem<T> max = maxPrev.next;
             ListItem<T> maxNext = max.next;
-            if (max == tail) {
-                tail = min;
-            }
             maxPrev.next = min;
             min.next = maxNext;
             max.next = minNext;
             head = max;
         } else if (minPrev.next == maxPrev) {
             // Case: Swap two adjacent elements (Transpose)
-            ListItem<T> min = minPrev.next;
+            min = minPrev.next;
+            max = maxPrev.next;
             ListItem<T> minNext = min.next;
-            ListItem<T> max = maxPrev.next;
             ListItem<T> maxNext = max.next;
-            if (max == tail) {
-                tail = min;
-            }
             minPrev.next = max;
             maxPrev.next = maxNext;
             minNext.next = maxPrev;
         } else {
             // Swap non-adjacent elements
-            ListItem<T> min = minPrev.next;
+            min = minPrev.next;
+            max = maxPrev.next;
             ListItem<T> minNext = min.next;
-            ListItem<T> max = maxPrev.next;
             ListItem<T> maxNext = max.next;
             maxPrev.next = min;
             min.next = maxNext;
             max.next = minNext;
             minPrev.next = max;
+        }
+        if (max == tail) {
+            tail = min;
         }
     }
 
