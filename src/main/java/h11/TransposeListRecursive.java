@@ -1,6 +1,7 @@
 package h11;
 
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
+import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 /**
@@ -40,6 +41,7 @@ public class TransposeListRecursive<T> extends TransposeList<T> implements SelfO
      *
      * @return the element at the specified index
      */
+    @SolutionOnly
     private T get(ListItem<T> previous, ListItem<T> beforePrevious, int index) {
         if (index == 1) {
             transpose(previous, beforePrevious);

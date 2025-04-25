@@ -1,6 +1,7 @@
 package h11;
 
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
+import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 /**
@@ -39,6 +40,7 @@ public class MoveToFrontListRecursive<T> extends MoveToFrontList<T> implements S
      *
      * @return the element at the specified index
      */
+    @SolutionOnly
     private T get(ListItem<T> previous, int index) {
         if (index == 1) {
             ListItem<T> newHead = previous.next;
