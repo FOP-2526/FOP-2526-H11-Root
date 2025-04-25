@@ -18,6 +18,7 @@ public abstract class MoveToFrontList<T> extends AbstractSelfOrganizingList<T> i
      */
     @DoNotTouch
     public MoveToFrontList() {
+
     }
 
     /**

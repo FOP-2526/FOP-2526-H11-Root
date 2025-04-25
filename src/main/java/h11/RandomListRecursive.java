@@ -32,6 +32,7 @@ public class RandomListRecursive<T> extends RandomList<T> implements SelfOrganiz
      */
     @DoNotTouch
     public RandomListRecursive() {
+
     }
 
     @StudentImplementationRequired("H11.3")

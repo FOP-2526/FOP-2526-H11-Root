@@ -20,6 +20,7 @@ public class MoveToFrontListIterator<T> extends MoveToFrontList<T> implements Se
      */
     @DoNotTouch
     public MoveToFrontListIterator() {
+
     }
 
     @StudentImplementationRequired("H11.4.2")

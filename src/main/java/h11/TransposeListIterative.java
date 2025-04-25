@@ -18,6 +18,7 @@ public class TransposeListIterative<T> extends TransposeList<T> implements SelfO
      */
     @DoNotTouch
     public TransposeListIterative() {
+
     }
 
     @StudentImplementationRequired("H11.2")

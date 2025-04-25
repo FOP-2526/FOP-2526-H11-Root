@@ -18,6 +18,7 @@ public class MoveToFrontListRecursive<T> extends MoveToFrontList<T> implements S
      */
     @DoNotTouch
     public MoveToFrontListRecursive() {
+
     }
 
     @StudentImplementationRequired("H11.1")

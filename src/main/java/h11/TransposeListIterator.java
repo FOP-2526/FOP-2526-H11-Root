@@ -18,6 +18,7 @@ public class TransposeListIterator<T> extends TransposeList<T> implements SelfOr
      */
     @DoNotTouch
     public TransposeListIterator() {
+
     }
 
     @StudentImplementationRequired("H11.4.3")

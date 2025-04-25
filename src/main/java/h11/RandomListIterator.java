@@ -31,6 +31,7 @@ public class RandomListIterator<T> extends RandomList<T> implements SelfOrganizi
      */
     @DoNotTouch
     public RandomListIterator() {
+
     }
 
     @StudentImplementationRequired("H11.4.4")
