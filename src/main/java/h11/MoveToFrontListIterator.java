@@ -26,6 +26,7 @@ public class MoveToFrontListIterator<T> extends MoveToFrontList<T> implements Se
     @StudentImplementationRequired("H11.4.2")
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
+        // TODO H11.4.2
         checkBounds(index);
         Iterator<T> it = iterator();
         T element = null;

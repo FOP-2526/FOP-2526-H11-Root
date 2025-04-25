@@ -138,12 +138,14 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
         @StudentImplementationRequired("H11.4.1")
         @Override
         public boolean hasPrevious() {
+            // TODO H11.4.1
             return previouses != null;
         }
 
         @StudentImplementationRequired("H11.4.1")
         @Override
         public T previous() {
+            // TODO H11.4.1
             // If we have no previous element, we cannot return anything
             if (!hasPrevious()) {
                 throw new NoSuchElementException();
@@ -180,6 +182,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
         @StudentImplementationRequired("H11.4.1")
         @Override
         public T next() {
+            // TODO H11.4.1
             // If we have no next element, we cannot return anything
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -196,6 +199,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
         @StudentImplementationRequired("H11.4.1")
         @Override
         public void add(T element) {
+            // TODO H11.4.1
             ListItem<ListItem<T>> previousCursor = previouses;
             // cursor == null only occurs when we are adding at the end of the list
             // previousCursor is used if we are adding multiple elements before moving to the next element
@@ -229,6 +233,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
         @StudentImplementationRequired("H11.4.1")
         @Override
         public void remove() {
+            // TODO H11.4.1
             // An element needs to be returned (present) before we can remove it
             if (lastReturned == null) {
                 throw new IllegalStateException();

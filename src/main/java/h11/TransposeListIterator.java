@@ -24,6 +24,7 @@ public class TransposeListIterator<T> extends TransposeList<T> implements SelfOr
     @StudentImplementationRequired("H11.4.3")
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
+        // TODO H11.4.3
         checkBounds(index);
         BidirectionalIterator<T> it = iterator();
         if (index == 0) {

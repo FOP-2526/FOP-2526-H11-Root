@@ -37,6 +37,7 @@ public class RandomListIterative<T> extends RandomList<T> implements SelfOrganiz
     @StudentImplementationRequired("H11.3")
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
+        // TODO H11.3
         checkBounds(index);
 
         if (index == 0) {

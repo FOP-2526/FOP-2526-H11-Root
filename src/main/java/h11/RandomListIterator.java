@@ -37,6 +37,7 @@ public class RandomListIterator<T> extends RandomList<T> implements SelfOrganizi
     @StudentImplementationRequired("H11.4.4")
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
+        // TODO H11.4.4
         checkBounds(index);
 
         // Special case when the list is just one element
