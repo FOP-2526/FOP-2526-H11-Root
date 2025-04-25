@@ -3,7 +3,7 @@ package h11;
 import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
-import org.tudalgo.algoutils.student.annotation.StudentCreationRequired;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -13,7 +13,10 @@ import java.util.Objects;
  * required to implement this interface by implementing common operations.
  *
  * @param <T> the type of elements in this list
+ *
+ * @author Nhan Huynh
  */
+@DoNotTouch
 public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingList<T> {
 
     /**
@@ -132,13 +135,13 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
          */
         @Nullable ListItem<ListItem<T>> previouses;
 
-        @StudentCreationRequired
+        @StudentImplementationRequired("H11.4.1")
         @Override
         public boolean hasPrevious() {
             return previouses != null;
         }
 
-        @StudentCreationRequired
+        @StudentImplementationRequired("H11.4.1")
         @Override
         public T previous() {
             // If we have no previous element, we cannot return anything
@@ -153,7 +156,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
             return cursor.key;
         }
 
-        @StudentCreationRequired
+        @StudentImplementationRequired("H11.4.1")
         @Override
         public boolean hasNext() {
             return cursor != null;
@@ -164,6 +167,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
          *
          * @param item the item to add
          */
+        @SolutionOnly
         private void addPrevious(ListItem<T> item) {
             // Stack-like behavior for the reverse cursor, elements are added to the front
             ListItem<ListItem<T>> previous = new ListItem<>(item);
@@ -173,7 +177,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
             previouses = previous;
         }
 
-        @StudentCreationRequired
+        @StudentImplementationRequired("H11.4.1")
         @Override
         public T next() {
             // If we have no next element, we cannot return anything
@@ -189,11 +193,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
             return lastReturned.key;
         }
 
-        private void addBefore(T element, ListItem<T> item) {
-
-        }
-
-        @StudentCreationRequired
+        @StudentImplementationRequired("H11.4.1")
         @Override
         public void add(T element) {
             ListItem<ListItem<T>> previousCursor = previouses;
@@ -226,7 +226,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
             size++;
         }
 
-        @StudentCreationRequired
+        @StudentImplementationRequired("H11.4.1")
         @Override
         public void remove() {
             // An element needs to be returned (present) before we can remove it

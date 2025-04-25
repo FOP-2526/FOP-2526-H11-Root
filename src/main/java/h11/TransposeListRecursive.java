@@ -7,7 +7,10 @@ import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
  * A recursive implementation of a self-organizing list that transposes accessed elements with their previous element.
  *
  * @param <T> the type of elements in the list
+ *
+ * @author Nhan Huynh
  */
+@DoNotTouch
 public class TransposeListRecursive<T> extends TransposeList<T> implements SelfOrganizingList<T> {
 
     /**
@@ -18,7 +21,7 @@ public class TransposeListRecursive<T> extends TransposeList<T> implements SelfO
 
     }
 
-    @StudentImplementationRequired
+    @StudentImplementationRequired("H11.2")
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
         checkBounds(index);

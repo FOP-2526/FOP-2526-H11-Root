@@ -7,7 +7,10 @@ import org.tudalgo.algoutils.student.annotation.SolutionOnly;
  * A self-organizing list that moves accessed elements to the front of the list.
  *
  * @param <T> the type of elements in the list
+ *
+ * @author Nhan Huynh
  */
+@DoNotTouch
 public abstract class MoveToFrontList<T> extends AbstractSelfOrganizingList<T> implements SelfOrganizingList<T> {
 
     /**

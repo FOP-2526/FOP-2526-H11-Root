@@ -9,6 +9,8 @@ import java.util.Objects;
  * A list item wraps a single element in a linked list data structure to allow linking of multiple items together.
  *
  * @param <T> the type of the key
+ *
+ * @author Nhan Huynh
  */
 @DoNotTouch
 public final class ListItem<T> {

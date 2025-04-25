@@ -11,12 +11,16 @@ import java.util.function.BiFunction;
  * random index which is smaller than the position of the accessed element.
  *
  * @param <T> the type of elements in the list
+ *
+ * @author Nhan Huynh
  */
+@DoNotTouch
 public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implements SelfOrganizingList<T> {
 
     /**
      * The randomizer function used to generate random indices.
      */
+    @DoNotTouch
     private final BiFunction<Integer, Integer, Integer> randomizer;
 
     /**
@@ -24,6 +28,7 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
      *
      * @param randomizer the randomizer function used to generate random indices
      */
+    @DoNotTouch
     public RandomList(BiFunction<Integer, Integer, Integer> randomizer) {
         this.randomizer = randomizer;
     }
@@ -31,6 +36,7 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
     /**
      * Creates a new empty list with a default randomizer function.
      */
+    @DoNotTouch
     public RandomList() {
         this((min, max) -> ThreadLocalRandom.current().nextInt(min, max));
     }
@@ -42,6 +48,7 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
      *
      * @return a random index between 0 (inclusive) and max (exclusive)
      */
+    @DoNotTouch
     protected int getRandomIndex(int max) {
         return randomizer.apply(0, max);
     }

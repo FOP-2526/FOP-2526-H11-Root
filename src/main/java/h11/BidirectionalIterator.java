@@ -9,6 +9,8 @@ import java.util.NoSuchElementException;
  * A bidirectional iterator is an iterator that allows traversing a collection in both directions.
  *
  * @param <T> the type of elements returned by this iterator
+ *
+ * @author Nhan Huynh
  */
 @DoNotTouch
 public interface BidirectionalIterator<T> extends Iterator<T> {
@@ -35,6 +37,7 @@ public interface BidirectionalIterator<T> extends Iterator<T> {
      *
      * @return {@code true} if this iterator has more elements when traversing the collection in the forward direction
      */
+    @DoNotTouch
     @Override
     boolean hasNext();
 
@@ -44,6 +47,7 @@ public interface BidirectionalIterator<T> extends Iterator<T> {
      * @return the next element in the collection
      * @throws NoSuchElementException if the iteration has no next element
      */
+    @DoNotTouch
     @Override
     T next() throws NoSuchElementException;
 
@@ -60,7 +64,7 @@ public interface BidirectionalIterator<T> extends Iterator<T> {
      *
      * @throws IllegalStateException if there is no last element returned by this iterator
      */
+    @DoNotTouch
     @Override
     void remove() throws IllegalStateException;
-
 }

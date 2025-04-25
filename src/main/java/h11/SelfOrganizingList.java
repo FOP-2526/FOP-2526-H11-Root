@@ -9,6 +9,8 @@ import java.util.NoSuchElementException;
  * access times for frequently accessed elements.
  *
  * @param <T> the type of elements in the list
+ *
+ * @author Nhan Huynh
  */
 @DoNotTouch
 public interface SelfOrganizingList<T> {

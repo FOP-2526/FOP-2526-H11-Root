@@ -1,6 +1,7 @@
 package h11;
 
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.function.BiFunction;
 
@@ -9,7 +10,10 @@ import java.util.function.BiFunction;
  * list based on a random index which is smaller than the position of the accessed element.
  *
  * @param <T> the type of elements in the list
+ *
+ * @author Nhan Huynh
  */
+@DoNotTouch
 public class RandomListIterator<T> extends RandomList<T> implements SelfOrganizingList<T> {
 
     /**
@@ -29,6 +33,7 @@ public class RandomListIterator<T> extends RandomList<T> implements SelfOrganizi
     public RandomListIterator() {
     }
 
+    @StudentImplementationRequired("H11.4.4")
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
         checkBounds(index);
