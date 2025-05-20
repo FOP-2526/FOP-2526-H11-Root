@@ -56,6 +56,9 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
     public void addFirst(T key) {
         ListItem<T> newHead = new ListItem<>(key);
         newHead.next = head;
+        if (tail == null) {
+            tail = newHead;
+        }
         head = newHead;
         size++;
     }
@@ -86,6 +89,9 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
         }
         for (ListItem<T> cursor = head; cursor.next != null; cursor = cursor.next) {
             if (cursor.next.key.equals(key)) {
+                if (cursor.next == tail) {
+                    tail = cursor;
+                }
                 cursor.next = cursor.next.next;
                 size--;
                 return;
