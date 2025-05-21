@@ -127,7 +127,11 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
     class BidirectionalListIterator implements BidirectionalIterator<T> {
 
         /**
-         * The last returned element from the iterator.
+         * The last element returned by a call to {@code next()} or {@code previous()}.
+         * This field is used to determine whether a subsequent call to {@code remove()}
+         * is valid. A call to {@code remove()} is only allowed if it directly follows a
+         * call to {@code next()} or {@code previous()}, and it cannot be called twice in a row
+         * without an intervening cursor movement.
          */
         @Nullable ListItem<T> lastReturned;
 
