@@ -28,13 +28,16 @@ public class MoveToFrontListIterator<T> extends MoveToFrontList<T> implements Se
     public T get(int index) throws IndexOutOfBoundsException {
         // TODO H11.4.2
         checkBounds(index);
-        Iterator<T> it = iterator();
+        BidirectionalIterator<T> it = iterator();
         T element = null;
         for (int i = 0; i <= index; i++) {
             element = it.next();
         }
         it.remove();
-        addFirst(element);
+        while (it.hasPrevious()) {
+            it.previous();
+        }
+        it.add(element);
         return element;
     }
 }
