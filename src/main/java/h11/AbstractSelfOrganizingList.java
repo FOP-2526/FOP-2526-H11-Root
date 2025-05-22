@@ -183,9 +183,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
         private void addPrevious(ListItem<T> item) {
             // Stack-like behavior for the reverse cursor, elements are added to the front
             ListItem<ListItem<T>> previous = new ListItem<>(item);
-            if (previouses != null) {
-                previous.next = previouses;
-            }
+            previous.next = previouses;
             previouses = previous;
         }
 
@@ -214,7 +212,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
             // cursor == null only occurs when we are adding at the end of the list
             // previousCursor is used if we are adding multiple elements before moving to the next element
             // Therefore, we need to retrieve the correct insertion position
-            while (cursor != null && previousCursor != null && !previousCursor.key.next.equals(cursor)) {
+            while (cursor != null && previousCursor != null && previousCursor.key.next != cursor) {
                 previousCursor = previousCursor.next;
             }
             ListItem<T> newItem = new ListItem<>(element);
