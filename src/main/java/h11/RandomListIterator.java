@@ -17,7 +17,7 @@ import java.util.function.BiFunction;
 @DoNotTouch
 public class RandomListIterator<T> extends RandomList<T> implements SelfOrganizingList<T> {
 
-/**
+    /**
      * Creates a new list with the given elements and randomizer function.
      *
      * @param elements   the elements to be added to the list

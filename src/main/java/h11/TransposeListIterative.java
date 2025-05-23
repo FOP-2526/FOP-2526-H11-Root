@@ -14,7 +14,7 @@ import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 @DoNotTouch
 public class TransposeListIterative<T> extends TransposeList<T> implements SelfOrganizingList<T> {
 
-      /**
+    /**
      * Creates a new empty list.
      */
     @DoNotTouch
