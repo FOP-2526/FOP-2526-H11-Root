@@ -1,5 +1,7 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
@@ -19,7 +21,16 @@ public class TransposeListRecursive<T> extends TransposeList<T> implements SelfO
      */
     @DoNotTouch
     public TransposeListRecursive() {
+    }
 
+    /**
+     * Creates a list with the given elements.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public TransposeListRecursive(@NotNull T[] elements) {
+        super(elements);
     }
 
     @StudentImplementationRequired("H11.2")
@@ -43,7 +54,7 @@ public class TransposeListRecursive<T> extends TransposeList<T> implements SelfO
      * @return the element at the specified index
      */
     @SolutionOnly
-    private T get(ListItem<T> previous, ListItem<T> beforePrevious, int index) {
+    private T get(@NotNull ListItem<T> previous, @Nullable ListItem<T> beforePrevious, int index) {
         if (index == 1) {
             transpose(previous, beforePrevious);
             return previous.key;

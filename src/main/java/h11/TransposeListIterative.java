@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -18,7 +19,16 @@ public class TransposeListIterative<T> extends TransposeList<T> implements SelfO
      */
     @DoNotTouch
     public TransposeListIterative() {
+    }
 
+    /**
+     * Creates a list with the given elements.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public TransposeListIterative(@NotNull T[] elements) {
+        super(elements);
     }
 
     @StudentImplementationRequired("H11.2")

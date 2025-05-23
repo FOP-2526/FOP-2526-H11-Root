@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
@@ -42,7 +43,24 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
      */
     @DoNotTouch
     public AbstractSelfOrganizingList() {
+    }
 
+    /**
+     * Creates a list with the given elements.
+     *
+     * @param elements the elements to be added to the list
+     */
+    public AbstractSelfOrganizingList(@NotNull T[] elements) {
+        if (elements.length == 0) {
+            return;
+        }
+        head = new ListItem<>(elements[0]);
+        tail = head;
+        for (int i = 1; i < elements.length; i++) {
+            tail.next = new ListItem<>(elements[i]);
+            tail = tail.next;
+        }
+        size = elements.length;
     }
 
     @DoNotTouch
@@ -56,6 +74,9 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
     public void addFirst(T key) {
         ListItem<T> newHead = new ListItem<>(key);
         newHead.next = head;
+        if (tail == null) {
+            tail = newHead;
+        }
         head = newHead;
         size++;
     }
@@ -86,6 +107,9 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
         }
         for (ListItem<T> cursor = head; cursor.next != null; cursor = cursor.next) {
             if (cursor.next.key.equals(key)) {
+                if (cursor.next == tail) {
+                    tail = cursor;
+                }
                 cursor.next = cursor.next.next;
                 size--;
                 return;
@@ -110,7 +134,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
 
     @DoNotTouch
     @Override
-    public BidirectionalIterator<T> iterator() {
+    public @NotNull BidirectionalIterator<T> iterator() {
         return new BidirectionalListIterator();
     }
 
@@ -121,7 +145,11 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
     class BidirectionalListIterator implements BidirectionalIterator<T> {
 
         /**
-         * The last returned element from the iterator.
+         * The last element returned by a call to {@code next()} or {@code previous()}.
+         * This field is used to determine whether a subsequent call to {@code remove()}
+         * is valid. A call to {@code remove()} is only allowed if it directly follows a
+         * call to {@code next()} or {@code previous()}, and it cannot be called twice in a row
+         * without an intervening cursor movement.
          */
         @Nullable ListItem<T> lastReturned;
 
@@ -173,9 +201,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
         private void addPrevious(ListItem<T> item) {
             // Stack-like behavior for the reverse cursor, elements are added to the front
             ListItem<ListItem<T>> previous = new ListItem<>(item);
-            if (previouses != null) {
-                previous.next = previouses;
-            }
+            previous.next = previouses;
             previouses = previous;
         }
 
@@ -204,7 +230,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
             // cursor == null only occurs when we are adding at the end of the list
             // previousCursor is used if we are adding multiple elements before moving to the next element
             // Therefore, we need to retrieve the correct insertion position
-            while (cursor != null && previousCursor != null && !previousCursor.key.next.equals(cursor)) {
+            while (cursor != null && previousCursor != null && previousCursor.key.next != cursor) {
                 previousCursor = previousCursor.next;
             }
             ListItem<T> newItem = new ListItem<>(element);

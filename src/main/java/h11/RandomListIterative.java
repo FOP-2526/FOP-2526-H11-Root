@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -17,12 +18,23 @@ import java.util.function.BiFunction;
 public class RandomListIterative<T> extends RandomList<T> implements SelfOrganizingList<T> {
 
     /**
+     * Creates a new list with the given elements and randomizer function.
+     *
+     * @param elements   the elements to be added to the list
+     * @param randomizer the randomizer function used to generate random indices
+     */
+    @DoNotTouch
+    public RandomListIterative(@NotNull T[] elements, @NotNull BiFunction<Integer, Integer, Integer> randomizer) {
+        super(elements, randomizer);
+    }
+
+    /**
      * Creates a new empty list with the given randomizer function.
      *
      * @param randomizer the randomizer function used to generate random indices
      */
     @DoNotTouch
-    public RandomListIterative(BiFunction<Integer, Integer, Integer> randomizer) {
+    public RandomListIterative(@NotNull BiFunction<Integer, Integer, Integer> randomizer) {
         super(randomizer);
     }
 
@@ -31,7 +43,6 @@ public class RandomListIterative<T> extends RandomList<T> implements SelfOrganiz
      */
     @DoNotTouch
     public RandomListIterative() {
-
     }
 
     @StudentImplementationRequired("H11.3")

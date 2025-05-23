@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
@@ -19,8 +20,18 @@ public class MoveToFrontListRecursive<T> extends MoveToFrontList<T> implements S
      */
     @DoNotTouch
     public MoveToFrontListRecursive() {
-
     }
+
+    /**
+     * Creates a list with the given elements.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public MoveToFrontListRecursive(@NotNull T[] elements) {
+        super(elements);
+    }
+
 
     @StudentImplementationRequired("H11.1")
     @Override
@@ -42,7 +53,7 @@ public class MoveToFrontListRecursive<T> extends MoveToFrontList<T> implements S
      * @return the element at the specified index
      */
     @SolutionOnly
-    private T get(ListItem<T> previous, int index) {
+    private @NotNull T get(ListItem<T> previous, int index) {
         if (index == 1) {
             ListItem<T> newHead = previous.next;
             moveToFront(previous, newHead);
