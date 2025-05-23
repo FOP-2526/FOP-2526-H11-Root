@@ -1,5 +1,7 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 
@@ -22,13 +24,23 @@ public abstract class TransposeList<T> extends AbstractSelfOrganizingList<T> imp
     }
 
     /**
+     * Creates a list with the given elements.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public TransposeList(@NotNull T[] elements) {
+        super(elements);
+    }
+
+    /**
      * Transposes the accessed element with the previous element in the list moving it one position to the front.
      *
      * @param previous       the previous element in the list to adjust the references
      * @param previousBefore the element before the previous element in the list to switch places with previous
      */
     @SolutionOnly
-    protected void transpose(ListItem<T> previous, ListItem<T> previousBefore) {
+    protected void transpose(@NotNull ListItem<T> previous, @Nullable ListItem<T> previousBefore) {
         if (previous.next == tail) {
             tail = previous;
         }
@@ -48,7 +60,7 @@ public abstract class TransposeList<T> extends AbstractSelfOrganizingList<T> imp
 
     @DoNotTouch
     @Override
-    public Strategy strategy() {
+    public @NotNull Strategy strategy() {
         return Strategy.TRANSPOSE;
     }
 }

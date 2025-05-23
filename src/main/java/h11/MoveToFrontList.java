@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 
@@ -18,7 +19,16 @@ public abstract class MoveToFrontList<T> extends AbstractSelfOrganizingList<T> i
      */
     @DoNotTouch
     public MoveToFrontList() {
+    }
 
+    /**
+     * Creates a list with the given elements.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public MoveToFrontList(@NotNull T[] elements) {
+        super(elements);
     }
 
     /**
@@ -28,7 +38,7 @@ public abstract class MoveToFrontList<T> extends AbstractSelfOrganizingList<T> i
      * @param newHead  the new head of the list
      */
     @SolutionOnly
-    protected void moveToFront(ListItem<T> previous, ListItem<T> newHead) {
+    protected void moveToFront(@NotNull ListItem<T> previous, @NotNull ListItem<T> newHead) {
         if (newHead == tail) {
             tail = previous;
         }
@@ -39,7 +49,7 @@ public abstract class MoveToFrontList<T> extends AbstractSelfOrganizingList<T> i
 
     @DoNotTouch
     @Override
-    public Strategy strategy() {
+    public @NotNull Strategy strategy() {
         return Strategy.MOVE_TO_FRONT;
     }
 }

@@ -1,5 +1,7 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 
@@ -24,13 +26,26 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
     private final BiFunction<Integer, Integer, Integer> randomizer;
 
     /**
+     * Creates a new list with the given elements and randomizer function.
+     *
+     * @param elements   the elements to be added to the list
+     * @param randomizer the randomizer function used to generate random indices
+     */
+    @DoNotTouch
+    public RandomList(@NotNull T[] elements, @NotNull BiFunction<Integer, Integer, Integer> randomizer) {
+        super(elements);
+        this.randomizer = randomizer;
+    }
+
+    /**
      * Creates a new empty list with the given randomizer function.
      *
      * @param randomizer the randomizer function used to generate random indices
      */
     @DoNotTouch
-    public RandomList(BiFunction<Integer, Integer, Integer> randomizer) {
-        this.randomizer = randomizer;
+    @SuppressWarnings("unchecked")
+    public RandomList(@NotNull BiFunction<Integer, Integer, Integer> randomizer) {
+        this((T[]) new Object[0], randomizer);
     }
 
     /**
@@ -60,7 +75,7 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
      * @param maxPrev the previous element before the maximum index
      */
     @SolutionOnly
-    protected void swap(ListItem<T> minPrev, ListItem<T> maxPrev) {
+    protected void swap(@Nullable ListItem<T> minPrev, @NotNull ListItem<T> maxPrev) {
         ListItem<T> min;
         ListItem<T> max;
         if (maxPrev == head) {
@@ -108,7 +123,7 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
 
     @DoNotTouch
     @Override
-    public Strategy strategy() {
+    public @NotNull Strategy strategy() {
         return Strategy.RANDOM;
     }
 }

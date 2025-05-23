@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
@@ -18,12 +19,23 @@ import java.util.function.BiFunction;
 public class RandomListRecursive<T> extends RandomList<T> implements SelfOrganizingList<T> {
 
     /**
+     * Creates a new list with the given elements and randomizer function.
+     *
+     * @param elements   the elements to be added to the list
+     * @param randomizer the randomizer function used to generate random indices
+     */
+    @DoNotTouch
+    public RandomListRecursive(@NotNull T[] elements, @NotNull BiFunction<Integer, Integer, Integer> randomizer) {
+        super(elements, randomizer);
+    }
+
+    /**
      * Creates a new empty list with the given randomizer function.
      *
      * @param randomizer the randomizer function used to generate random indices
      */
     @DoNotTouch
-    public RandomListRecursive(BiFunction<Integer, Integer, Integer> randomizer) {
+    public RandomListRecursive(@NotNull BiFunction<Integer, Integer, Integer> randomizer) {
         super(randomizer);
     }
 
@@ -32,7 +44,6 @@ public class RandomListRecursive<T> extends RandomList<T> implements SelfOrganiz
      */
     @DoNotTouch
     public RandomListRecursive() {
-
     }
 
     @StudentImplementationRequired("H11.3")
@@ -65,7 +76,7 @@ public class RandomListRecursive<T> extends RandomList<T> implements SelfOrganiz
      * @return the previous elements at the specified indices
      */
     @SolutionOnly
-    private ListItem<ListItem<T>> getPreviousElements(
+    private @NotNull ListItem<ListItem<T>> getPreviousElements(
         ListItem<T> cursor, int i,
         int randomIndex, int index,
         ListItem<T> randomPrev, ListItem<T> getPrev) {

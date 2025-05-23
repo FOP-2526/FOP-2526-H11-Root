@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -18,7 +19,16 @@ public class MoveToFrontListIterative<T> extends MoveToFrontList<T> implements S
      */
     @DoNotTouch
     public MoveToFrontListIterative() {
+    }
 
+    /**
+     * Creates a list with the given elements.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public MoveToFrontListIterative(@NotNull T[] elements) {
+        super(elements);
     }
 
     @StudentImplementationRequired("H11.1")

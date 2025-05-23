@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
 import java.util.NoSuchElementException;
@@ -21,7 +22,7 @@ public interface SelfOrganizingList<T> {
      * @return the strategy used to organize the list
      */
     @DoNotTouch
-    Strategy strategy();
+    @NotNull Strategy strategy();
 
     /**
      * Returns the number of elements in the list.
@@ -74,7 +75,7 @@ public interface SelfOrganizingList<T> {
      * @return an iterator over the elements in the list
      */
     @DoNotTouch
-    BidirectionalIterator<T> iterator();
+    @NotNull BidirectionalIterator<T> iterator();
 
     /**
      * Defines the strategies for organizing the list.
