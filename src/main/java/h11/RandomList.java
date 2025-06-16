@@ -49,6 +49,16 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
     }
 
     /**
+     * Creates a new list with the given elements and a default randomizer function.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public RandomList(@NotNull T[] elements) {
+        this(elements, (min, max) -> ThreadLocalRandom.current().nextInt(min, max));
+    }
+
+    /**
      * Creates a new empty list with a default randomizer function.
      */
     @DoNotTouch

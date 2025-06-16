@@ -40,6 +40,16 @@ public class RandomListRecursive<T> extends RandomList<T> implements SelfOrganiz
     }
 
     /**
+     * Creates a new list with the given elements and a default randomizer function.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public RandomListRecursive(@NotNull T[] elements) {
+        super(elements);
+    }
+
+    /**
      * Creates a new empty list with a default randomizer function.
      */
     @DoNotTouch
