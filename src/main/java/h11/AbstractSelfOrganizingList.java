@@ -236,15 +236,15 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
             ListItem<T> newItem = new ListItem<>(element);
             addPrevious(newItem);
 
-            if (cursor == null) {
+            if (previousCursor == null) {
+                // Case: Adding to the front of the list
+                newItem.next = head;
+                head = newItem;
+            } else if (cursor == null) {
                 // Case: Adding to the end of the list
                 ListItem<T> previousItem = previousCursor.key;
                 previousItem.next = newItem;
                 tail = newItem;
-            } else if (previousCursor == null) {
-                // Case: Adding to the front of the list
-                newItem.next = head;
-                head = newItem;
             } else {
                 // Case: Adding to the middle of the list
                 ListItem<T> previousItem = previousCursor.key;
