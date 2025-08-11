@@ -116,8 +116,6 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
         // TODO H11.4.1
         ListItem<T> newItem = new ListItem<>(element);
 
-        // Vorgänger des Einfügepunkts ist top(previouses), falls vorhanden.
-
         // Predecessor of the insertion point is top(previouses), if available.
         // If previouses is null, we are inserting at the beginning of the list.
         ListItem<T> parent = (previouses == null) ? null : previouses.key;
@@ -134,7 +132,7 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
             newItem.next = cursor;
             parent.next = newItem;
             if (cursor == null) {
-                // Anfügen am Ende -> Tail aktualisieren
+                // If we are inserting at the end of the list, we need to update the tail
                 list.tail = newItem;
             }
         }
