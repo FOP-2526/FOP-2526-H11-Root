@@ -8,34 +8,21 @@ import org.sourcegrade.jagr.api.rubric.RubricProvider;
 import java.util.List;
 
 import static org.tudalgo.algoutils.tutor.general.jagr.RubricUtils.criterion;
+import static org.tudalgo.algoutils.tutor.general.jagr.RubricUtils.graderPrivateOnly;
 
-public class H11_RubricProviderPrivate implements RubricProvider {
+public class H11_RubricProviderPublic implements RubricProvider {
 
     private static final Criterion H11_1 = Criterion.builder()
         .shortDescription("H11.1 | Strategie Move to Front")
         .maxPoints(4)
         .minPoints(0)
         .addChildCriteria(
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in MoveToFrontListRecursive verschiebt das Element am angegebenen Index an den "
-                    + "Anfang der Liste.",
-                JUnitTestRef.ofMethod(() -> MoveToFrontListRecursiveTest.class.getDeclaredMethod(
-                    "testGet",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+                    + "Anfang der Liste."
             ),
-            criterion(
-                "Die Methode get(int index) in MoveToFrontListRecursive ist vollständig implementiert und funktioniert korrekt.",
-                JUnitTestRef.ofMethod(() -> MoveToFrontListRecursiveTest.class.getDeclaredMethod(
-                    "testGet_complete",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+            criterionPrivate(
+                "Die Methode get(int index) in MoveToFrontListRecursive ist vollständig implementiert und funktioniert korrekt."
             ),
             criterion(
                 "Die Methode get(int index) in MoveToFrontListIterative verschiebt das Element am angegebenen Index an den "
@@ -57,16 +44,6 @@ public class H11_RubricProviderPrivate implements RubricProvider {
                     Object.class,
                     List.class
                 ))
-            ),
-            criterion(
-                "Die verbindliche Anforderung für MoveToFrontListRecursive wurde eingehalten",
-                -2,
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAMoveRec"))
-            ),
-            criterion(
-                "Die verbindliche Anforderung für MoveToFrontListIterative wurde eingehalten",
-                -2,
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAMoveIter"))
             )
         )
         .build();
@@ -76,78 +53,26 @@ public class H11_RubricProviderPrivate implements RubricProvider {
         .maxPoints(6)
         .minPoints(0)
         .addChildCriteria(
-            criterion(
-                "Die Methode get(int index) in TransposeListRecursive liefert das Element am angegebenen Index korrekt zurück.",
-                JUnitTestRef.ofMethod(() -> TransposeListRecursiveTest.class.getDeclaredMethod(
-                    "testGet",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+            criterionPrivate(
+                "Die Methode get(int index) in TransposeListRecursive liefert das Element am angegebenen Index korrekt zurück."
             ),
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in TransposeListRecursive verschiebt das Element am angegebenen Index korrekt um "
-                    + "eine Position nach vorne (mit seinem Vorgänger wird getauscht).",
-                JUnitTestRef.ofMethod(() -> TransposeListRecursiveTest.class.getDeclaredMethod(
-                    "testGet_move",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+                    + "eine Position nach vorne (mit seinem Vorgänger wird getauscht)."
             ),
-            criterion(
-                "Die Methode get(int index) in TransposeListRecursive ist vollständig implementiert und funktioniert korrekt.",
-                JUnitTestRef.ofMethod(() -> TransposeListRecursiveTest.class.getDeclaredMethod(
-                    "testGet_complete",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+            criterionPrivate(
+                "Die Methode get(int index) in TransposeListRecursive ist vollständig implementiert und funktioniert korrekt."
             ),
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in TransposeListIterative verschiebt das Element am angegebenen Index korrekt "
-                    + "zurück.",
-                JUnitTestRef.ofMethod(() -> TransposeListIterativeTest.class.getDeclaredMethod(
-                    "testGet",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+                    + "zurück."
             ),
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in TransposeListIterative verschiebt das Element am angegebenen Index korrekt um "
-                    + "eine Position nach vorne (mit seinem Vorgänger wird getauscht).",
-                JUnitTestRef.ofMethod(() -> TransposeListIterativeTest.class.getDeclaredMethod(
-                    "testGet_move",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+                    + "eine Position nach vorne (mit seinem Vorgänger wird getauscht)."
             ),
-            criterion(
-                "Die Methode get(int index) in TransposeListIterative ist vollständig implementiert und funktioniert korrekt.",
-                JUnitTestRef.ofMethod(() -> TransposeListIterativeTest.class.getDeclaredMethod(
-                    "testGet_complete",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
-            ),
-            criterion(
-                "Die verbindliche Anforderung für TransposeListRecursive wurde eingehalten",
-                -3,
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVATransRec"))
-            ),
-            criterion(
-                "Die verbindliche Anforderung für TransposeListIterative wurde eingehalten",
-                -3,
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVATransIter"))
+            criterionPrivate(
+                "Die Methode get(int index) in TransposeListIterative ist vollständig implementiert und funktioniert korrekt."
             )
         )
         .build();
@@ -191,51 +116,16 @@ public class H11_RubricProviderPrivate implements RubricProvider {
                     List.class
                 ))
             ),
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in RandomIterative vertauscht das Element am angegebenen Index korrekt mit dem Kopf"
-                    + " der Liste.",
-                JUnitTestRef.ofMethod(() -> RandomListIterativeTest.class.getDeclaredMethod(
-                    "testGet_first",
-                    List.class,
-                    int.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+                    + " der Liste."
             ),
-            criterion(
-                "Die Methode get(int index) in RandomIterative vertauscht zwei benachbarte Elemente korrekt.",
-                JUnitTestRef.ofMethod(() -> RandomListIterativeTest.class.getDeclaredMethod(
-                    "testGet_neighbor",
-                    List.class,
-                    int.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+            criterionPrivate(
+                "Die Methode get(int index) in RandomIterative vertauscht zwei benachbarte Elemente korrekt."
             ),
-            criterion(
-                "Die Methode get(int index) in RandomIterative vertauscht zwei nicht benachbarte Elemente korrekt.",
-                JUnitTestRef.ofMethod(() -> RandomListIterativeTest.class.getDeclaredMethod(
-                    "testGet_non_neighbor",
-                    List.class,
-                    int.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
-            ),
-            criterion(
-                "Die verbindliche Anforderung für RandomRecursive wurde eingehalten",
-                -3,
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVARandRec"))
-            ),
-            criterion(
-                "Die verbindliche Anforderung für RandomIterative wurde eingehalten",
-                -3,
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVARandIter"))
+            criterionPrivate(
+                "Die Methode get(int index) in RandomIterative vertauscht zwei nicht benachbarte Elemente korrekt."
             )
-
         )
         .build();
 
@@ -350,31 +240,6 @@ public class H11_RubricProviderPrivate implements RubricProvider {
                     List.class,
                     boolean.class
                 ))
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode hasNext() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterHasNext")),
-                -1
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode hasPrevious() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterHasPrev")),
-                -1
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode previous() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterPrev")),
-                -1
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode next() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterNext")),
-                -1
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode remove() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterRemove")),
-                -3
             )
         )
         .build();
@@ -384,32 +249,13 @@ public class H11_RubricProviderPrivate implements RubricProvider {
         .maxPoints(2)
         .minPoints(0)
         .addChildCriteria(
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in MoveToFrontListIterator entfernt das zu verschiebende Element korrekt aus der "
-                    + "Liste.",
-                JUnitTestRef.ofMethod(() -> MoveToFrontListIteratorTest.class.getDeclaredMethod(
-                    "testGet_add",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
+                    + "Liste."
             ),
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in MoveToFrontListIterator fügt das zu verschiebende Element korrekt am Anfang der "
-                    + "Liste wieder ein.",
-                JUnitTestRef.ofMethod(() -> MoveToFrontListIteratorTest.class.getDeclaredMethod(
-                    "testGet_remove",
-                    List.class,
-                    int.class,
-                    Object.class,
-                    List.class
-                ))
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAMoveItera")),
-                -2
+                    + "Liste wieder ein."
             )
         )
         .build();
@@ -440,11 +286,6 @@ public class H11_RubricProviderPrivate implements RubricProvider {
                     + "korrekten Position wieder ein.",
                 JUnitTestRef.ofMethod(() -> TransposeListIteratorTestPublic.class.getDeclaredMethod(
                     "testGet_previousIndex", List.class, int.class, Object.class, List.class))
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVATransItera")),
-                -3
             )
         )
         .build();
@@ -454,28 +295,17 @@ public class H11_RubricProviderPrivate implements RubricProvider {
         .maxPoints(3)
         .minPoints(0)
         .addChildCriteria(
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in RandomIterator fügt das erste Element (index) an der korrekten Position wieder "
-                    + "ein.",
-                JUnitTestRef.ofMethod(() -> RandomListIteratorTest.class.getDeclaredMethod(
-                    "testGet", List.class, int.class, int.class, Object.class, List.class))
+                    + "ein."
             ),
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in RandomIterator fügt das erste Element (index) an der korrekten Position wieder "
-                    + "ein.",
-                JUnitTestRef.ofMethod(() -> RandomListIteratorTest.class.getDeclaredMethod(
-                    "testGet_index", List.class, int.class, int.class, Object.class, List.class))
+                    + "ein."
             ),
-            criterion(
+            criterionPrivate(
                 "Die Methode get(int index) in RandomIterator fügt das zweite Element (zufälliger Index) an der korrekten "
-                    + "Position wieder ein.",
-                JUnitTestRef.ofMethod(() -> RandomListIteratorTest.class.getDeclaredMethod(
-                    "testGet_randomIndex", List.class, int.class, int.class, Object.class, List.class))
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVARandItera")),
-                -3
+                    + "Position wieder ein."
             )
         )
         .build();
@@ -490,6 +320,13 @@ public class H11_RubricProviderPrivate implements RubricProvider {
             H11_4_4
         )
         .build();
+
+    private static Criterion criterionPrivate(String description) {
+        return Criterion.builder()
+            .shortDescription(description)
+            .grader(graderPrivateOnly())
+            .build();
+    }
 
     public static final Rubric RUBRIC = Rubric.builder()
         .title("H11 | Selbstorganisierende Listen")

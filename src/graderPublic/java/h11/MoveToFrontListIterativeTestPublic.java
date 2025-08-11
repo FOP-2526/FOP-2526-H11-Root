@@ -1,23 +1,19 @@
 package h11;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
-import org.tudalgo.algoutils.tutor.general.assertions.Assertions4;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
-import org.tudalgo.algoutils.tutor.general.reflections.BasicMethodLink;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertEquals;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
-import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.emptyContext;
 
 @TestForSubmission
-public class MoveToFrontListIterativeTest extends H11_TestP {
+public class MoveToFrontListIterativeTestPublic extends H11_TestP {
 
     @ParameterizedTest
     @MethodSource("provideTestGet")
@@ -86,14 +82,6 @@ public class MoveToFrontListIterativeTest extends H11_TestP {
                 1,
                 List.of(1)
             )
-        );
-    }
-
-    @Test
-    public void testVA() throws NoSuchMethodException {
-        Assertions4.assertIsNotRecursively(
-            BasicMethodLink.of(MoveToFrontListIterative.class.getDeclaredMethod("get", int.class))
-                .getCtElement(), emptyContext(), r -> "get() contains recursion"
         );
     }
 }
