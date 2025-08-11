@@ -23,6 +23,8 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
      * is valid. A call to {@code remove()} is only allowed if it directly follows a
      * call to {@code next()} or {@code previous()}, and it cannot be called twice in a row
      * without an intervening cursor movement.
+     * In case of a call to {@code add()}, this field is set to {@code null} since no removal is possible after adding
+     * an element.
      */
     @Nullable ListItem<T> lastReturned;
 
