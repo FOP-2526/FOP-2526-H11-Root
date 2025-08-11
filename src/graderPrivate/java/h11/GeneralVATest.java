@@ -87,26 +87,26 @@ public class GeneralVATest {
 
     @Test
     public void testVAIterHasPrev() throws NoSuchMethodException {
-        testMethod(AbstractSelfOrganizingList.BidirectionalListIterator.class.getDeclaredMethod("hasPrevious"));
+        testMethod(BidirectionalListIterator.class.getDeclaredMethod("hasPrevious"));
     }
 
     @Test
     public void testVAIterPrev() throws NoSuchMethodException {
-        testMethod(AbstractSelfOrganizingList.BidirectionalListIterator.class.getDeclaredMethod("previous"));
+        testMethod(BidirectionalListIterator.class.getDeclaredMethod("previous"));
     }
 
     @Test
     public void testVAIterHasNext() throws NoSuchMethodException {
-        testMethod(AbstractSelfOrganizingList.BidirectionalListIterator.class.getDeclaredMethod("hasNext"));
+        testMethod(BidirectionalListIterator.class.getDeclaredMethod("hasNext"));
     }
 
     @Test
     public void testVAIterNext() throws NoSuchMethodException {
-        testMethod(AbstractSelfOrganizingList.BidirectionalListIterator.class.getDeclaredMethod("next"));
+        testMethod(BidirectionalListIterator.class.getDeclaredMethod("next"));
     }
 
     @Test
     public void testVAIterRemove() throws NoSuchMethodException {
-        testMethod(AbstractSelfOrganizingList.BidirectionalListIterator.class.getDeclaredMethod("remove"));
+        testMethod(BidirectionalListIterator.class.getDeclaredMethod("remove"));
     }
 }
