@@ -29,6 +29,16 @@ public class RandomListIterator<T> extends RandomList<T> implements SelfOrganizi
     }
 
     /**
+     * Creates a new list with the given elements and a default randomizer function.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public RandomListIterator(@NotNull T[] elements) {
+        super(elements);
+    }
+
+    /**
      * Creates a new empty list with the given randomizer function.
      *
      * @param randomizer the randomizer function used to generate random indices

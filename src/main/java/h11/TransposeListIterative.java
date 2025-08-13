@@ -45,7 +45,8 @@ public class TransposeListIterative<T> extends TransposeList<T> implements SelfO
             previous = cursor;
             cursor = cursor.next;
         }
+        T res =  cursor.next.key;
         transpose(cursor, previous);
-        return cursor.key;
+        return res;
     }
 }

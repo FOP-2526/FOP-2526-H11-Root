@@ -32,7 +32,7 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
      * @param randomizer the randomizer function used to generate random indices
      */
     @DoNotTouch
-    public RandomList(@NotNull T[] elements, @NotNull BiFunction<Integer, Integer, Integer> randomizer) {
+    public RandomList(@NotNull T[] elements, @Nullable BiFunction<Integer, Integer, Integer> randomizer) {
         super(elements);
         this.randomizer = randomizer;
     }
@@ -46,6 +46,16 @@ public abstract class RandomList<T> extends AbstractSelfOrganizingList<T> implem
     @SuppressWarnings("unchecked")
     public RandomList(@NotNull BiFunction<Integer, Integer, Integer> randomizer) {
         this((T[]) new Object[0], randomizer);
+    }
+
+    /**
+     * Creates a new list with the given elements and a default randomizer function.
+     *
+     * @param elements the elements to be added to the list
+     */
+    @DoNotTouch
+    public RandomList(@NotNull T[] elements) {
+        this(elements, (min, max) -> ThreadLocalRandom.current().nextInt(min, max));
     }
 
     /**

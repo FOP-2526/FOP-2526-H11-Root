@@ -56,8 +56,9 @@ public class TransposeListRecursive<T> extends TransposeList<T> implements SelfO
     @SolutionOnly
     private T get(@NotNull ListItem<T> previous, @Nullable ListItem<T> beforePrevious, int index) {
         if (index == 1) {
+            T res = previous.next.key;
             transpose(previous, beforePrevious);
-            return previous.key;
+            return res;
         }
         return get(previous.next, previous, index - 1);
     }
