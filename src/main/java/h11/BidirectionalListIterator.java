@@ -20,11 +20,14 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
     /**
      * The last element returned by a call to {@code next()} or {@code previous()}.
      * This field is used to determine whether a subsequent call to {@code remove()}
-     * is valid. A call to {@code remove()} is only allowed if it directly follows a
-     * call to {@code next()} or {@code previous()}, and it cannot be called twice in a row
-     * without an intervening cursor movement.
-     * In case of a call to {@code add()}, this field is set to {@code null} since no removal is possible after adding
-     * an element.
+     * is valid. A call to {@code remove()} is only allowed if it directly follows
+     * a call to {@code next()} or {@code previous()}, and it cannot be called twice
+     * in a row without an intervening cursor movement.
+     * <p>
+     * After a call to {@code add()}, this field is set to {@code null} to prevent
+     * an immediate {@code remove()}. After a call to {@code remove()}, it is also
+     * set to {@code null} because the previously returned element no longer exists
+     * in the list.
      */
     @Nullable ListItem<T> lastReturned;
 
@@ -123,18 +126,15 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
         if (parent == null) {
             newItem.next = list.head;
             list.head = newItem;
-            if (list.tail == null) {
-                // If the list was empty, we also set the tail to the new item since head = tail
-                list.tail = newItem;
-            }
         } else {
             // Insertion after parent
             newItem.next = cursor;
             parent.next = newItem;
-            if (cursor == null) {
-                // If we are inserting at the end of the list, we need to update the tail
-                list.tail = newItem;
-            }
+
+        }
+        if (cursor == null) {
+            // If we are inserting at the end of the list, we need to update the tail
+            list.tail = newItem;
         }
 
         // New added item is now the previous for the next call to previous()
@@ -165,7 +165,34 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
         ListItem<T> parent;
 
         if (lastWasFromPrevious) {
-            // previous(): The predecessor is now on top of the stack (Top = predecessor of cursor/lastReturned)
+            /*
+             * Example list:
+             *   head → [A] → [B] → [C] → [D] → null
+             *
+             * Suppose the iterator had already moved forward to C:
+             *   cursor       = D
+             *   lastReturned = C
+             *   previouses   = [C] (top), [B], [A]
+             *
+             * After calling previous():    // step back to B
+             *   cursor       = B
+             *   lastReturned = B
+             *   previouses   = [A] (top)
+             *
+             * Before calling remove():
+             *   cursor       = B
+             *   lastReturned = B
+             *   previouses   = [A] (top)
+             *
+             * After calling remove():
+             *   head         = A
+             *   cursor       = C         // skips over removed element B
+             *   lastReturned = null
+             *   previouses   = [A] (top) // unchanged top = predecessor
+             *
+             * => previous(): predecessor is on top of the stack.
+             *    Removal links predecessor (A) to lastReturned.next (C).
+             */
             parent = (previouses == null) ? null : previouses.key;
 
             // Unlink lastReturned
@@ -175,26 +202,35 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
             } else {
                 parent.next = lastNext;
             }
-            if (lastReturned == list.tail) {
-                // If lastReturned was the tail, update the tail to the predecessor
-                list.tail = parent;
-            }
 
             cursor = lastNext;
         } else {
-            //  next(): lastReturned is on top of the stack (top = lastReturned).
-            // predecessor is the element below top in the stack (or null, if head is removed).
-            // previouses ist leer, wenn lastReturned am Anfang der Liste steht.
-            if (previouses == null || previouses.key != lastReturned) {
-                // Should not happen if the iterator is used correctly, but we handle it gracefully
-                parent = null;
-                for (ListItem<T> p = list.head; p != null && p != lastReturned; p = p.next) {
-                    parent = p;
-                }
-            } else {
-                parent = (previouses.next == null) ? null : previouses.next.key;
-            }
+            /*
+             * Example list:
+             *   head → [A] → [B] → [C] → [D] → null
+             *
+             * Iterator has just moved forward to B:
+             *   cursor       = C
+             *   lastReturned = B
+             *   previouses   = [B] (top), [A]
+             *
+             * Before calling remove():
+             *   cursor       = C
+             *   lastReturned = B
+             *   previouses   = [B] (top), [A]
+             *
+             * After calling remove():
+             *   head         = A
+             *   cursor       = C         // stays at next element
+             *   lastReturned = null
+             *   previouses   = [A] (top) // top (B) was popped since it was removed
+             *
+             * => next(): lastReturned is on top of the stack.
+             *    The predecessor is directly below top (A),
+             *    and is linked to lastReturned.next (C).
+             */
 
+            parent = (previouses.next == null) ? null : previouses.next.key;
             // Unlink lastReturned
             if (parent == null) {
                 // Remove from head since there is no predecessor
@@ -202,15 +238,16 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
             } else {
                 parent.next = lastNext;
             }
-            if (lastReturned == list.tail) {
-                // If lastReturned was the tail, update the tail to the predecessor
-                list.tail = parent;
-            }
 
             // Pop the top (== lastReturned) from the predecessor stack since this element was removed.
-            if (previouses != null && previouses.key == lastReturned) {
+            if (previouses.key == lastReturned) {
                 previouses = previouses.next;
             }
+        }
+
+        if (lastReturned == list.tail) {
+            // If lastReturned was the tail, update the tail to the predecessor
+            list.tail = parent;
         }
 
         lastReturned = null;
