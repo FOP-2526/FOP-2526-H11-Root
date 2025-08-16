@@ -5,11 +5,14 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import h11.mocking.ReflectionUtilsP;
 import org.apache.commons.lang3.stream.Streams;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.provider.Arguments;
 import org.sourcegrade.jagr.api.testing.extension.TestCycleResolver;
 import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
+import org.tudalgo.algoutils.tutor.general.reflections.BasicFieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicMethodLink;
+import org.tudalgo.algoutils.tutor.general.reflections.Modifier;
 import spoon.reflect.code.CtDo;
 import spoon.reflect.code.CtFor;
 import spoon.reflect.code.CtForEach;
@@ -36,6 +39,11 @@ import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.emptyCo
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions4.assertIsNotRecursively;
 
 public class H11_TestP {
+
+    @BeforeEach
+    public void beforeEach() throws NoSuchFieldException {
+        assertTrue(Modifier.FINAL.is(BasicFieldLink.of(ListItem.class.getDeclaredField("key")).modifiers()), emptyContext(), r -> "\"key\" of ListItem is no longer final. The field was modified despite being marked as @DoNotTouch.");
+    }
 
     public static <T> void assertContainsAll(List<T> expected, List<T> actual, Context context) {
         assertContainsAll(expected, actual, ReflectionUtilsP::equalsForMocks, context);
