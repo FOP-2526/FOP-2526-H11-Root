@@ -10,7 +10,6 @@ import java.util.Objects;
  * A list item wraps a single element in a linked list data structure to allow linking of multiple items together.
  *
  * @param <T> the type of the key
- *
  * @author Nhan Huynh
  */
 @DoNotTouch
@@ -20,7 +19,7 @@ public final class ListItem<T> {
      * The key of the list item.
      */
     @DoNotTouch
-    T key;
+    final T key;
 
     /**
      * The reference to the next element in the list.
@@ -28,13 +27,6 @@ public final class ListItem<T> {
     @DoNotTouch
     @Nullable
     ListItem<T> next;
-
-    /**
-     * Creates an empty list item.
-     */
-    @DoNotTouch
-    public ListItem() {
-    }
 
     /**
      * Creates a list item with the given key.

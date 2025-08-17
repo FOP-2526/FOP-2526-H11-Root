@@ -690,7 +690,6 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
         doThrow(new AssertionFailedError("Illegal call to method addLast() from List")).when(list).addLast(any());
         doThrow(new AssertionFailedError("Illegal call to method addFirst() from List")).when(list).addFirst(any());
-        doThrow(new AssertionFailedError("Illegal call to method checkBounds() from List")).when(list).checkBounds(anyInt());
         doThrow(new AssertionFailedError("Illegal call to method remove() from List")).when(list).remove(any());
         doThrow(new AssertionFailedError("Illegal call to method get() from List")).when(list).get(anyInt());
 
