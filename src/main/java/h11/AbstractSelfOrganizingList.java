@@ -132,7 +132,7 @@ public abstract class AbstractSelfOrganizingList<T> implements SelfOrganizingLis
     @DoNotTouch
     @Override
     public @NotNull BidirectionalIterator<T> iterator() {
-        return new BidirectionalListIterator(this);
+        return new BidirectionalListIterator<>(this);
     }
 
     @DoNotTouch
