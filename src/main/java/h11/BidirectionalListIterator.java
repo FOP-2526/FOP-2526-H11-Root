@@ -60,7 +60,7 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
 
     @StudentImplementationRequired("H11.4.1")
     @Override
-    public T previous() {
+    public T previous() throws  NoSuchElementException {
         // TODO H11.4.1
         // If we have no previous element, we cannot return anything
         if (!hasPrevious()) {
@@ -98,7 +98,7 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
 
     @StudentImplementationRequired("H11.4.1")
     @Override
-    public T next() {
+    public T next() throws  NoSuchElementException {
         // TODO H11.4.1
         // If we have no next element, we cannot return anything
         if (!hasNext()) {
@@ -146,7 +146,7 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
 
     @StudentImplementationRequired("H11.4.1")
     @Override
-    public void remove() {
+    public void remove() throws IllegalStateException{
         // TODO H11.4.1
         // An element needs to be returned (present) before we can remove it
         if (lastReturned == null) {
