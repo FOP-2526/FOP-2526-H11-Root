@@ -1,5 +1,6 @@
 package h11;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
@@ -15,7 +16,7 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
     /**
      * The list to iterate over.
      */
-    private final AbstractSelfOrganizingList<T> list;
+    private final @NotNull AbstractSelfOrganizingList<T> list;
 
     /**
      * The last element returned by a call to {@code next()} or {@code previous()}.
@@ -46,7 +47,7 @@ class BidirectionalListIterator<T> implements BidirectionalIterator<T> {
      *
      * @param list the list to iterate over
      */
-    BidirectionalListIterator(AbstractSelfOrganizingList<T> list) {
+    BidirectionalListIterator(@NotNull AbstractSelfOrganizingList<T> list) {
         this.list = list;
         this.cursor = list.head;
     }
