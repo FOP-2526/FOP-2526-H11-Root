@@ -283,52 +283,10 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     }
 
     @ParameterizedTest
-    @MethodSource("provideTestAdd_middle")
-    public void testAdd_middle(List<Object> elements, int curserPos, Object toAdd, ListItem<Object> lastReturnedExpected,
-                               ListItem<Object> cursorExpected,
-                               List<Object> expectedList) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
-        ListItem<ListItem<Object>> previousesExpected = new ListItem<>(new ListItem<>(toAdd));
-        previousesExpected.next = toTest.getThird();
-
-        doAnswer(CALLS_REAL_METHODS).when(iter).add(any());
-
-        iter.add(toAdd);
-
-        testState(lastReturnedExpected, cursorExpected, previousesExpected, expectedList, list, iter);
-        assertEquals(elements.size() + 1, list.size(), emptyContext(), r -> "The list does not have the correct size.");
-    }
-
-    public static Stream<Arguments> provideTestAdd_middle() {
-        return Stream.of(
-            Arguments.of(
-                List.of(0, 1, 2, 3, 4, 5, 6),
-                0,
-                100,
-                null,
-                new ListItem<Object>(0),
-                List.of(100, 0, 1, 2, 3, 4, 5, 6)
-            ),
-            Arguments.of(
-                List.of(6, 5, 4, 3, 2, 1),
-                6,
-                100,
-                null,
-                null,
-                List.of(6, 5, 4, 3, 2, 1, 100)
-            )
-        );
-    }
-
-    @ParameterizedTest
     @MethodSource("provideTestAdd")
     public void testAdd(List<Object> elements, int curserPos, Object toAdd, ListItem<Object> lastReturnedExpected,
-                        ListItem<Object> cursorExpected,
-                        List<Object> expectedList) {
+                               ListItem<Object> cursorExpected,
+                               List<Object> expectedList) {
 
         Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
             setupIterator(elements, curserPos);
@@ -349,6 +307,22 @@ public class BidirectionalListIteratorTest extends H11_TestP {
         return Stream.of(
             Arguments.of(
                 List.of(0, 1, 2, 3, 4, 5, 6),
+                0,
+                100,
+                null,
+                new ListItem<Object>(0),
+                List.of(100, 0, 1, 2, 3, 4, 5, 6)
+            ),
+            Arguments.of(
+                List.of(6, 5, 4, 3, 2, 1),
+                6,
+                100,
+                null,
+                null,
+                List.of(6, 5, 4, 3, 2, 1, 100)
+            ),
+            Arguments.of(
+                List.of(0, 1, 2, 3, 4, 5, 6),
                 4,
                 100,
                 null,
@@ -362,6 +336,56 @@ public class BidirectionalListIteratorTest extends H11_TestP {
                 null,
                 new ListItem<Object>(4),
                 List.of(6, 5, 100, 4, 3, 2, 1)
+            )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestAdd_empty")
+    public void testAdd_empty(List<Object> elements, int curserPos, Object toAdd, ListItem<Object> lastReturnedExpected,
+                        ListItem<Object> cursorExpected,
+                        List<Object> expectedList) {
+
+        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
+            setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
+        BidirectionalIterator<Object> iter = toTest.getSecond();
+        ListItem<ListItem<Object>> previousesExpected = new ListItem<>(new ListItem<>(toAdd));
+        previousesExpected.next = toTest.getThird();
+
+        doAnswer(CALLS_REAL_METHODS).when(iter).add(any());
+
+        iter.add(toAdd);
+
+        testState(lastReturnedExpected, cursorExpected, previousesExpected, expectedList, list, iter);
+        assertEquals(elements.size() + 1, list.size(), emptyContext(), r -> "The list does not have the correct size.");
+    }
+
+    public static Stream<Arguments> provideTestAdd_empty() {
+        return Stream.of(
+            Arguments.of(
+                List.of(),
+                0,
+                100,
+                null,
+                null,
+                List.of(100)
+            ),
+            Arguments.of(
+                List.of(),
+                0,
+                1,
+                null,
+                null,
+                List.of(1)
+            ),
+            Arguments.of(
+                List.of(),
+                0,
+                5,
+                null,
+                null,
+                List.of(5)
             )
         );
     }

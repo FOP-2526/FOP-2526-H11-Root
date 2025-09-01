@@ -291,9 +291,9 @@ public class H11_RubricProviderPrivate implements RubricProvider {
                 ))
             ),
             criterion(
-                "Die Methode add() gibt das korrekte Ergebnis für Fall 1 und 3 zurück.",
+                "Die Methode add() gibt das korrekte Ergebnis für Fall 1 zurück.",
                 JUnitTestRef.ofMethod(() -> BidirectionalListIteratorTest.class.getDeclaredMethod(
-                    "testAdd",
+                    "testAdd_empty",
                     List.class,
                     int.class,
                     Object.class,
@@ -305,7 +305,7 @@ public class H11_RubricProviderPrivate implements RubricProvider {
             criterion(
                 "Die Methode add() gibt das korrekte Ergebnis für Fall 2 zurück.",
                 JUnitTestRef.ofMethod(() -> BidirectionalListIteratorTest.class.getDeclaredMethod(
-                    "testAdd_middle",
+                    "testAdd",
                     List.class,
                     int.class,
                     Object.class,
