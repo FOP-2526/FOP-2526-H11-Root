@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
+import static h11.BidirectionalListIteratorTest.mergeInto;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -29,8 +30,6 @@ public class IteratorTest extends H11_TestP {
         List<List<Object>> interactions = new ArrayList<>();
 
         Answer<?> defaultAnswer = (mockInvocation) -> {
-            System.out.println("Invoking " + mockInvocation.getMethod().getName() + " on " + System.identityHashCode(
-                mockInvocation.getMock()) + " with list " + System.identityHashCode(list));
 
             List<Object> mapped = toList(list);
             ListIterator<Object> listIter = mapped.listIterator();
@@ -51,14 +50,8 @@ public class IteratorTest extends H11_TestP {
                 )
                 .invoke(listIter, mockInvocation.getArguments());
 
-            System.out.println("mapped: " + mapped);
-
-            AbstractSelfOrganizingList<Object> data = new MoveToFrontListIterative<>(mapped.toArray());
-            list.head = data.head;
-            list.tail = data.tail;
-            ReflectionUtilsP.setFieldValue(list, "size", data.size());
-
-            System.out.println("actual: " + list);
+            mergeInto(list, mapped);
+            ReflectionUtilsP.setFieldValue(list, "size", mapped.size());
 
             ListItem<Object> cursor = list.head;
             if (mockInvocation.getMethod().getName().equals("next") || mockInvocation.getMethod().getName().equals("previous")) {
@@ -109,8 +102,6 @@ public class IteratorTest extends H11_TestP {
             }
 
             interactions.add(mapped);
-
-            System.out.println("actual end: " + list);
             return returned;
         };
 

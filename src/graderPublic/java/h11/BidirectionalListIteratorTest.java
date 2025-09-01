@@ -610,10 +610,8 @@ public class BidirectionalListIteratorTest extends H11_TestP {
                 )
                 .invoke(listIter, mockInvocation.getArguments());
 
-            AbstractSelfOrganizingList<Object> data = new MoveToFrontListIterative<>(mapped.toArray());
-            list.head = data.head;
-            list.tail = data.tail;
-            ReflectionUtilsP.setFieldValue(list, "size", data.size());
+            mergeInto(list, mapped);
+            ReflectionUtilsP.setFieldValue(list, "size", mapped.size());
 
             ListItem<Object> cursor = list.head;
             if (mockInvocation.getMethod().getName().equals("next") || mockInvocation.getMethod().getName().equals("previous")) {
@@ -662,7 +660,6 @@ public class BidirectionalListIteratorTest extends H11_TestP {
                     ReflectionUtilsP.<ListItem<Object>>getFieldValue(iter, "previouses").next
                 );
             }
-
             return returned;
         };
 
@@ -694,5 +691,63 @@ public class BidirectionalListIteratorTest extends H11_TestP {
         doThrow(new AssertionFailedError("Illegal call to method get() from List")).when(list).get(anyInt());
 
         return new Triple<>(list, iter, ReflectionUtilsP.getFieldValue(iter, "previouses"));
+    }
+
+    public static <T> void mergeInto(AbstractSelfOrganizingList<T> toMergeInto, List<T> toMerge) {
+        AbstractSelfOrganizingList<T> data = (AbstractSelfOrganizingList<T>) new MoveToFrontListIterative<>(toMerge.toArray());
+
+        if (toMergeInto.head == null) {
+            toMergeInto.head = data.head;
+            toMergeInto.tail = data.tail;
+            ReflectionUtilsP.setFieldValue(toMergeInto, "size", data.size());
+            return;
+        }
+
+        if (toMerge.isEmpty()){
+            toMergeInto.head = null;
+            toMergeInto.tail = null;
+            return;
+        }
+
+        ListItem<T> intoHead = toMergeInto.head;
+        ListItem<T> dataHead = toMergeInto.head;
+        while (true) {
+            //all following elements newly created
+            if (intoHead == null){
+                toMergeInto.tail.next = dataHead;
+                toMergeInto.tail = data.tail;
+                break;
+            }
+            toMergeInto.tail = intoHead;
+
+            //all following elements deleted
+            if (dataHead == null) {
+                intoHead.next = null;
+                break;
+            }
+
+            //object stayed the same
+            if (intoHead.key == dataHead.key) {
+                intoHead = intoHead.next;
+                dataHead = dataHead.next;
+                continue;
+            }
+
+            //element added in between
+            if (dataHead.next != null && intoHead.key == dataHead.next.key) {
+                ListItem<T> inserted = dataHead;
+                dataHead = dataHead.next;
+                inserted.next = intoHead.next;
+                intoHead.next = inserted;
+                continue;
+            }
+
+            ListItem<T> current = toMergeInto.head;
+            while (current.next != intoHead) {
+                current = current.next;
+            }
+            current.next = current.next.next;
+            intoHead = intoHead.next;
+        }
     }
 }
