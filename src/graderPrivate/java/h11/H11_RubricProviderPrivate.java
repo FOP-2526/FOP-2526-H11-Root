@@ -316,7 +316,7 @@ public class H11_RubricProviderPrivate implements RubricProvider {
             ),
             criterion(
                 "Die Methode remove() wirft eine IllegalStateException, wenn vor dem Aufruf kein Element durch den Iterator "
-                    + "zurückgegeben wurde.",
+                    + "zurückgegeben wurde. (Fall 1)",
                 JUnitTestRef.ofMethod(() -> BidirectionalListIteratorTest.class.getDeclaredMethod(
                     "testRemove_exception",
                     List.class,
@@ -328,9 +328,9 @@ public class H11_RubricProviderPrivate implements RubricProvider {
                 ))
             ),
             criterion(
-                "Die Methode remove() gibt das korrekte Ergebnis für Fall 2 und 4 zurück.",
+                "Die Methode remove() gibt das korrekte Ergebnis für Fall 2 zurück.",
                 JUnitTestRef.ofMethod(() -> BidirectionalListIteratorTest.class.getDeclaredMethod(
-                    "testRemove",
+                    "testRemove_previous",
                     List.class,
                     int.class,
                     ListItem.class,
@@ -342,7 +342,7 @@ public class H11_RubricProviderPrivate implements RubricProvider {
             criterion(
                 "Die Methode remove() gibt das korrekte Ergebnis für Fall 3 zurück.",
                 JUnitTestRef.ofMethod(() -> BidirectionalListIteratorTest.class.getDeclaredMethod(
-                    "testRemove_edge",
+                    "testRemove_next",
                     List.class,
                     int.class,
                     ListItem.class,

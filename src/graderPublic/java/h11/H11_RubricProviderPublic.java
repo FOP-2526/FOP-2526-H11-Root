@@ -218,9 +218,9 @@ public class H11_RubricProviderPublic implements RubricProvider {
                 ))
             ),
             criterion(
-                "Die Methode remove() gibt das korrekte Ergebnis für Fall 2 und 4 zurück.",
+                "Die Methode remove() gibt das korrekte Ergebnis für Fall 2 zurück.",
                 JUnitTestRef.ofMethod(() -> BidirectionalListIteratorTest.class.getDeclaredMethod(
-                    "testRemove",
+                    "testRemove_previous",
                     List.class,
                     int.class,
                     ListItem.class,
@@ -232,7 +232,7 @@ public class H11_RubricProviderPublic implements RubricProvider {
             criterion(
                 "Die Methode remove() gibt das korrekte Ergebnis für Fall 3 zurück.",
                 JUnitTestRef.ofMethod(() -> BidirectionalListIteratorTest.class.getDeclaredMethod(
-                    "testRemove_edge",
+                    "testRemove_next",
                     List.class,
                     int.class,
                     ListItem.class,

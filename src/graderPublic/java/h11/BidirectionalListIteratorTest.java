@@ -391,8 +391,8 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     }
 
     @ParameterizedTest
-    @MethodSource("provideTestRemove_edge")
-    public void testRemove_edge(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
+    @MethodSource("provideTestRemove_next")
+    public void testRemove_next(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                                 ListItem<Object> cursorExpected,
                                 List<Object> expectedList, boolean throwing) {
 
@@ -429,9 +429,23 @@ public class BidirectionalListIteratorTest extends H11_TestP {
         );
     }
 
-    public static Stream<Arguments> provideTestRemove_edge() {
+    public static Stream<Arguments> provideTestRemove_next() {
         return Stream.of(
             Arguments.of(
+                List.of(0, 1, 2, 3, 4, 5, 6),
+                4,
+                null,
+                new ListItem<Object>(4),
+                List.of(0, 1, 2, 4, 5, 6),
+                false
+            ), Arguments.of(
+                List.of(6, 5, 4, 3, 2, 1),
+                2,
+                null,
+                new ListItem<Object>(4),
+                List.of(6, 4, 3, 2, 1),
+                false
+            ), Arguments.of(
                 List.of(0, 1, 2, 3, 4),
                 5,
                 null,
@@ -545,13 +559,13 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     }
 
     @ParameterizedTest
-    @MethodSource("provideTestRemove")
-    public void testRemove(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
+    @MethodSource("provideTestRemove_previous")
+    public void testRemove_previous(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                            ListItem<Object> cursorExpected,
                            List<Object> expectedList, boolean throwing) {
 
         Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
+            setupIterator_afterPrev(elements, curserPos);
         AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
         BidirectionalIterator<Object> iter = toTest.getSecond();
         ListItem<ListItem<Object>> previousesExpected = toTest.getThird();
@@ -583,7 +597,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
         );
     }
 
-    public static Stream<Arguments> provideTestRemove() {
+    public static Stream<Arguments> provideTestRemove_previous() {
         return Stream.of(
             Arguments.of(
                 List.of(0, 1, 2, 3, 4, 5, 6),
@@ -599,8 +613,61 @@ public class BidirectionalListIteratorTest extends H11_TestP {
                 new ListItem<Object>(4),
                 List.of(6, 4, 3, 2, 1),
                 false
+            ), Arguments.of(
+                List.of(0, 1, 2, 3, 4),
+                5,
+                null,
+                null,
+                List.of(0, 1, 2, 3),
+                false
+            ), Arguments.of(
+                List.of(0, 1, 2, 3, 4, 5, 6),
+                1,
+                null,
+                new ListItem<Object>(1),
+                List.of(1, 2, 3, 4, 5, 6),
+                false
+            ), Arguments.of(
+                List.of(6, 5, 4, 3, 2, 1),
+                1,
+                null,
+                new ListItem<Object>(5),
+                List.of(5, 4, 3, 2, 1),
+                false
+            ), Arguments.of(
+                List.of(6, 5, 4, 3, 2, 1),
+                6,
+                null,
+                null,
+                List.of(6, 5, 4, 3, 2),
+                false
+            ),
+            Arguments.of(
+                List.of(1, 2, 3, 4, 5, 6),
+                6,
+                null,
+                null,
+                List.of(1, 2, 3, 4, 5),
+                false
             )
         );
+    }
+
+    private static Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> setupIterator_afterPrev(
+        List<Object> elements, int curserPos) {
+
+        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
+            setupIterator(elements, curserPos);
+
+        BidirectionalListIterator<Object> iter = (BidirectionalListIterator<Object>) toTest.component2();
+
+        iter.cursor = iter.lastReturned;
+        while (iter.previouses != null && iter.previouses.key != iter.cursor){
+            iter.previouses = iter.previouses.next;
+        }
+        iter.previouses = iter.previouses.next;
+
+        return toTest;
     }
 
     private static Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> setupIterator(
