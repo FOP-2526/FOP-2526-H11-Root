@@ -22,6 +22,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertEquals;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.emptyContext;
@@ -800,8 +801,9 @@ public class BidirectionalListIteratorTest extends H11_TestP {
             return;
         }
 
+        ListItem<T> intoLast = null;
         ListItem<T> intoHead = toMergeInto.head;
-        ListItem<T> dataHead = toMergeInto.head;
+        ListItem<T> dataHead = data.head;
         while (true) {
             //all following elements newly created
             if (intoHead == null){
@@ -813,12 +815,16 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
             //all following elements deleted
             if (dataHead == null) {
-                intoHead.next = null;
+                if (intoLast != null) {
+                    intoLast.next = null;
+                    toMergeInto.tail = null;
+                }
                 break;
             }
 
             //object stayed the same
             if (intoHead.key == dataHead.key) {
+                intoLast = intoHead;
                 intoHead = intoHead.next;
                 dataHead = dataHead.next;
                 continue;
@@ -826,10 +832,26 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
             //element added in between
             if (dataHead.next != null && intoHead.key == dataHead.next.key) {
-                ListItem<T> inserted = dataHead;
+                ListItem<T> inserted = new ListItem<>(dataHead.key);
+                inserted.next = intoHead;
+                if (intoLast == null) {
+                    toMergeInto.head = inserted;
+                } else {
+                    intoLast.next = inserted;
+                }
                 dataHead = dataHead.next;
-                inserted.next = intoHead.next;
-                intoHead.next = inserted;
+                continue;
+            }
+
+            //element deleted
+            if (intoHead.next != null && intoHead.next.key == dataHead.key) {
+                if (intoLast == null) {
+                    toMergeInto.head = intoHead.next;
+                    intoHead = intoHead.next;
+                } else {
+                    intoLast.next = intoHead.next;
+                    intoHead = intoHead.next;
+                }
                 continue;
             }
 
@@ -838,6 +860,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
                 current = current.next;
             }
             current.next = current.next.next;
+            intoLast = intoHead;
             intoHead = intoHead.next;
         }
     }
