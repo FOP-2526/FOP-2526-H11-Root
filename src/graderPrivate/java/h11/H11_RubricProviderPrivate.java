@@ -350,31 +350,6 @@ public class H11_RubricProviderPrivate implements RubricProvider {
                     List.class,
                     boolean.class
                 ))
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode hasNext() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterHasNext")),
-                -1
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode hasPrevious() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterHasPrev")),
-                -1
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode previous() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterPrev")),
-                -1
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode next() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterNext")),
-                -1
-            ),
-            criterion(
-                "Die Verbindlichen Anforderungen der Methode remove() wurden eingehalten.",
-                JUnitTestRef.ofMethod(() -> GeneralVATest.class.getDeclaredMethod("testVAIterRemove")),
-                -3
             )
         )
         .build();
@@ -481,7 +456,7 @@ public class H11_RubricProviderPrivate implements RubricProvider {
         .build();
 
     private static final Criterion H11_4 = Criterion.builder()
-        .shortDescription("P11.4 | Iteratoren")
+        .shortDescription("H11.4 | Iteratoren")
         .minPoints(0)
         .addChildCriteria(
             H11_4_1,

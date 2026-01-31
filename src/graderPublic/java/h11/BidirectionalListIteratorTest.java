@@ -2,7 +2,6 @@ package h11;
 
 import h11.mocking.ReflectionUtilsP;
 import h11.mocking.StudentImplementationException;
-import kotlin.Triple;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,10 +10,7 @@ import org.mockito.stubbing.Answer;
 import org.opentest4j.AssertionFailedError;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
@@ -22,7 +18,6 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertEquals;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.emptyContext;
@@ -35,12 +30,10 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     @MethodSource("provideTestHasPrevious")
     public void testHasPrevious(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                                 ListItem<Object> cursorExpected, boolean expected) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
-        ListItem<ListItem<Object>> previousesExpected = toTest.getThird();
+        IteratorMeta toTest = setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
+        ListItem<ListItem<Object>> previousesExpected = toTest.previouses();
 
         doAnswer(CALLS_REAL_METHODS).when(iter).hasPrevious();
 
@@ -48,8 +41,8 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
         assertEquals(expected, actual, emptyContext(), r -> "The returned value does not match expected.");
         testState(lastReturnedExpected, cursorExpected, previousesExpected, elements, list, iter);
+        testVA(list, iter, toTest.originalListElements(), null);
     }
-
 
     public static Stream<Arguments> provideTestHasPrevious() {
         return Stream.of(
@@ -86,11 +79,9 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     public void testPrevious(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                              ListItem<Object> cursorExpected, ListItem<ListItem<Object>> previousesExpected, Object expected,
                              boolean throwing) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
+        IteratorMeta toTest = setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
 
         doAnswer(CALLS_REAL_METHODS).when(iter).previous();
 
@@ -111,6 +102,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
         assertEquals(expected, actual, emptyContext(), r -> "The returned value does not match expected.");
         testState(lastReturnedExpected, cursorExpected, previousesExpected, elements, list, iter);
+        testVA(list, iter, toTest.originalListElements(), null);
     }
 
     public static Stream<Arguments> provideTestPrevious() {
@@ -166,12 +158,10 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     @MethodSource("provideTestHasNext")
     public void testHasNext(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                             ListItem<Object> cursorExpected, boolean expected) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
-        ListItem<ListItem<Object>> previousesExpected = toTest.getThird();
+        IteratorMeta toTest = setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
+        ListItem<ListItem<Object>> previousesExpected = toTest.previouses();
 
         doAnswer(CALLS_REAL_METHODS).when(iter).hasNext();
 
@@ -179,6 +169,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
         assertEquals(expected, actual, emptyContext(), r -> "The returned value does not match expected.");
         testState(lastReturnedExpected, cursorExpected, previousesExpected, elements, list, iter);
+        testVA(list, iter, toTest.originalListElements(), null);
     }
 
     public static Stream<Arguments> provideTestHasNext() {
@@ -215,11 +206,9 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     @MethodSource("provideTestNext")
     public void testNext(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                          ListItem<Object> cursorExpected, ListItem<ListItem<Object>> previousesExpected, Object expected) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
+        IteratorMeta toTest = setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
 
         doAnswer(CALLS_REAL_METHODS).when(iter).next();
 
@@ -227,6 +216,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
         assertEquals(expected, actual, emptyContext(), r -> "The returned value does not match expected.");
         testState(lastReturnedExpected, cursorExpected, previousesExpected, elements, list, iter);
+        testVA(list, iter, toTest.originalListElements(), null);
     }
 
     public static Stream<Arguments> provideTestNext() {
@@ -288,13 +278,11 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     public void testAdd(List<Object> elements, int curserPos, Object toAdd, ListItem<Object> lastReturnedExpected,
                                ListItem<Object> cursorExpected,
                                List<Object> expectedList) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
+        IteratorMeta toTest = setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
         ListItem<ListItem<Object>> previousesExpected = new ListItem<>(new ListItem<>(toAdd));
-        previousesExpected.next = toTest.getThird();
+        previousesExpected.next = toTest.previouses();
 
         doAnswer(CALLS_REAL_METHODS).when(iter).add(any());
 
@@ -302,6 +290,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
         testState(lastReturnedExpected, cursorExpected, previousesExpected, expectedList, list, iter);
         assertEquals(elements.size() + 1, list.size(), emptyContext(), r -> "The list does not have the correct size.");
+        testVA(list, iter, toTest.originalListElements(), toAdd);
     }
 
     public static Stream<Arguments> provideTestAdd() {
@@ -346,13 +335,11 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     public void testAdd_empty(List<Object> elements, int curserPos, Object toAdd, ListItem<Object> lastReturnedExpected,
                         ListItem<Object> cursorExpected,
                         List<Object> expectedList) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
+        IteratorMeta toTest = setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
         ListItem<ListItem<Object>> previousesExpected = new ListItem<>(new ListItem<>(toAdd));
-        previousesExpected.next = toTest.getThird();
+        previousesExpected.next = toTest.previouses();
 
         doAnswer(CALLS_REAL_METHODS).when(iter).add(any());
 
@@ -360,6 +347,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
 
         testState(lastReturnedExpected, cursorExpected, previousesExpected, expectedList, list, iter);
         assertEquals(elements.size() + 1, list.size(), emptyContext(), r -> "The list does not have the correct size.");
+        testVA(list, iter, toTest.originalListElements(), toAdd);
     }
 
     public static Stream<Arguments> provideTestAdd_empty() {
@@ -396,12 +384,10 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     public void testRemove_next(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                                 ListItem<Object> cursorExpected,
                                 List<Object> expectedList, boolean throwing) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
-        ListItem<ListItem<Object>> previousesExpected = toTest.getThird();
+        IteratorMeta toTest = setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
+        ListItem<ListItem<Object>> previousesExpected = toTest.previouses();
         if (previousesExpected != null) {
             previousesExpected = previousesExpected.next;
         }
@@ -428,6 +414,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
             emptyContext(),
             r -> "The list does not have the correct size."
         );
+        testVA(list, iter, toTest.originalListElements(), null);
     }
 
     public static Stream<Arguments> provideTestRemove_next() {
@@ -491,12 +478,10 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     public void testRemove_exception(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                                      ListItem<Object> cursorExpected,
                                      List<Object> expectedList, boolean throwing) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
-        ListItem<ListItem<Object>> previousesExpected = toTest.getThird();
+        IteratorMeta toTest = setupIterator(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
+        ListItem<ListItem<Object>> previousesExpected = toTest.previouses();
 
         ReflectionUtilsP.setFieldValue(iter, "lastReturned", null);
 
@@ -522,6 +507,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
             emptyContext(),
             r -> "The list does not have the correct size."
         );
+        testVA(list, iter, toTest.originalListElements(), null);
     }
 
     public static Stream<Arguments> provideTestRemove_exception() {
@@ -564,12 +550,10 @@ public class BidirectionalListIteratorTest extends H11_TestP {
     public void testRemove_previous(List<Object> elements, int curserPos, ListItem<Object> lastReturnedExpected,
                            ListItem<Object> cursorExpected,
                            List<Object> expectedList, boolean throwing) {
-
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator_afterPrev(elements, curserPos);
-        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.getFirst();
-        BidirectionalIterator<Object> iter = toTest.getSecond();
-        ListItem<ListItem<Object>> previousesExpected = toTest.getThird();
+        IteratorMeta toTest = setupIterator_afterPrev(elements, curserPos);
+        AbstractSelfOrganizingList<Object> list = (AbstractSelfOrganizingList<Object>) toTest.list();
+        BidirectionalIterator<Object> iter = toTest.iterator();
+        ListItem<ListItem<Object>> previousesExpected = toTest.previouses();
         if (previousesExpected != null) {
             previousesExpected = previousesExpected.next;
         }
@@ -596,6 +580,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
             emptyContext(),
             r -> "The list does not have the correct size."
         );
+        testVA(list, iter, toTest.originalListElements(), null);
     }
 
     public static Stream<Arguments> provideTestRemove_previous() {
@@ -654,13 +639,17 @@ public class BidirectionalListIteratorTest extends H11_TestP {
         );
     }
 
-    private static Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> setupIterator_afterPrev(
-        List<Object> elements, int curserPos) {
+    private record IteratorMeta(
+        SelfOrganizingList<Object> list,
+        BidirectionalIterator<Object> iterator,
+        ListItem<ListItem<Object>> previouses,
+        List<ListItem<Object>> originalListElements
+    ) {}
 
-        Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> toTest =
-            setupIterator(elements, curserPos);
+    private static IteratorMeta setupIterator_afterPrev(List<Object> elements, int curserPos) {
+        IteratorMeta toTest = setupIterator(elements, curserPos);
 
-        BidirectionalListIterator<Object> iter = (BidirectionalListIterator<Object>) toTest.component2();
+        BidirectionalListIterator<Object> iter = (BidirectionalListIterator<Object>) toTest.iterator();
 
         iter.cursor = iter.lastReturned;
         while (iter.previouses != null && iter.previouses.key != iter.cursor){
@@ -671,7 +660,7 @@ public class BidirectionalListIteratorTest extends H11_TestP {
         return toTest;
     }
 
-    private static Triple<SelfOrganizingList<Object>, BidirectionalIterator<Object>, ListItem<ListItem<Object>>> setupIterator(
+    private static IteratorMeta setupIterator(
         List<Object> elements, int curserPos) {
         AbstractSelfOrganizingList<Object> list = spy(new AbstractSelfOrganizingList<>(elements.toArray()) {
 
@@ -782,7 +771,11 @@ public class BidirectionalListIteratorTest extends H11_TestP {
         doThrow(new AssertionFailedError("Illegal call to method remove() from List")).when(list).remove(any());
         doThrow(new AssertionFailedError("Illegal call to method get() from List")).when(list).get(anyInt());
 
-        return new Triple<>(list, iter, ReflectionUtilsP.getFieldValue(iter, "previouses"));
+        List<ListItem<Object>> originalListElements = new ArrayList<>();
+        for (ListItem<Object> p = list.head; p != null; p = p.next) {
+            originalListElements.add(p);
+        }
+        return new IteratorMeta(list, iter, ReflectionUtilsP.getFieldValue(iter, "previouses"), originalListElements);
     }
 
     public static <T> void mergeInto(AbstractSelfOrganizingList<T> toMergeInto, List<T> toMerge) {
@@ -862,6 +855,42 @@ public class BidirectionalListIteratorTest extends H11_TestP {
             current.next = current.next.next;
             intoLast = intoHead;
             intoHead = intoHead.next;
+        }
+    }
+
+    private void testVA(AbstractSelfOrganizingList<Object> list,
+                        BidirectionalIterator<Object> iterator,
+                        List<ListItem<Object>> originalListElements,
+                        Object toAdd) {
+        BidirectionalListIterator<Object> iter = (BidirectionalListIterator<Object>) iterator;
+
+        // Backing list
+        for (ListItem<Object> p = list.head; p != null; p = p.next) {
+            final ListItem<Object> finalP = p;
+            // If ListItem not in original list or, if new item and value is not null and not expected
+            if (originalListElements.stream().noneMatch(li -> finalP == li) && (toAdd == null || finalP.key != toAdd)) {
+                fail(emptyContext(), r -> "Method created a new ListItem");
+            }
+        }
+
+        // BidirectionalListIterator.cursor
+        if (iter.cursor != null && originalListElements.stream().noneMatch(li -> iter.cursor == li)) {
+            fail(emptyContext(), r -> "Method created a new ListItem");
+        }
+
+        // BidirectionalListIterator.lastReturned
+        if (iter.lastReturned != null && originalListElements.stream().noneMatch(li -> iter.lastReturned == li)) {
+            fail(emptyContext(), r -> "Method created a new ListItem");
+        }
+
+        // BidirectionalListIterator.previouses
+        for (ListItem<ListItem<Object>> previousesP = iter.previouses; previousesP != null; previousesP = previousesP.next) {
+            for (ListItem<Object> p = previousesP.key; p != null; p = p.next) {
+                final ListItem<Object> finalP = p;
+                if (originalListElements.stream().noneMatch(li -> finalP == li) && (toAdd == null || finalP.key != toAdd)) {
+                    fail(emptyContext(), r -> "Method created a new ListItem");
+                }
+            }
         }
     }
 }
